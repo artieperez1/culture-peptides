@@ -16,11 +16,26 @@ export default {
           deep: "#C10014",
           glow: "#FF4D5A",
         },
+        /* v2 — "the record": light analytical-instrument palette */
+        paper: "#FAFAF9",
+        card: "#FFFFFF",
+        ink2: "#0B0B0C",
+        graphite: "#3F3F46",
+        ash: "#71717A",
+        rule: "#E4E4E7",
+        crimson: {
+          DEFAULT: "#E4002B",
+          deep: "#B00020",
+          soft: "#FEF2F4",
+        },
       },
       fontFamily: {
         display: ['"Space Grotesk"', "system-ui", "sans-serif"],
         body: ['"Inter"', "system-ui", "sans-serif"],
         mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+        serif: ['"IBM Plex Serif"', "Georgia", "serif"],
+        plex: ['"IBM Plex Sans"', "system-ui", "sans-serif"],
+        data: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
       },
       letterSpacing: {
         tightest: "-0.05em",

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FAFAF9" />
+    <title>Culture Peptides — The Analytical Record</title>
+    <meta
+      name="description"
+      content="Search research peptides by sequence, name, CAS or catalog number. Every lot published with a third-party certificate of analysis. For laboratory research use only."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FAQPage structured data — an edge the €960M CDMOs all miss (borrowed from CS Bio) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Are Culture Peptides products intended for human use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. All products are supplied strictly for in-vitro laboratory research use only. They are not drugs, dietary supplements, foods, or cosmetics, and are not for human or veterinary consumption."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why can an HPLC purity result read higher than 100%?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Purity is measured against a reference standard. If a lot is purer than the standard it is compared to, the calculated result can exceed 100% — a value such as 101.4% indicates the reference standard, not an error in the lot."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which laboratory performs your testing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Identity and purity testing is performed by an independent ISO/IEC 17025-accredited analytical laboratory. The laboratory is named on every certificate of analysis with its contact details so buyers can verify results directly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I retrieve the certificate for the specific lot I received?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Enter the lot number printed on the vial into the lot lookup to retrieve that lot's certificate of analysis, HPLC chromatogram, and mass spectrum."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/v2/main.tsx"></script>
+  </body>
+</html>

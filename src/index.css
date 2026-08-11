@@ -92,6 +92,38 @@ body {
     @apply inline-flex items-center gap-1.5 border border-line px-2.5 py-1 font-mono text-[10px]
       uppercase tracking-[0.16em] text-steel;
   }
+
+  /* ---- v2 "the record": light analytical-instrument components ---- */
+  .btn-record {
+    @apply inline-flex shrink-0 items-center justify-center gap-2 bg-crimson px-5 py-2.5 font-data
+      text-[11px] font-medium uppercase tracking-[0.16em] text-white transition-colors
+      hover:bg-crimson-deep focus-visible:outline-none focus-visible:ring-2
+      focus-visible:ring-crimson focus-visible:ring-offset-2;
+  }
+  .btn-quiet {
+    @apply inline-flex shrink-0 items-center justify-center gap-2 border border-ink2/20 px-5 py-2.5
+      font-data text-[11px] font-medium uppercase tracking-[0.16em] text-ink2 transition-colors
+      hover:border-ink2 hover:bg-ink2 hover:text-white focus-visible:outline-none
+      focus-visible:ring-2 focus-visible:ring-crimson focus-visible:ring-offset-2;
+  }
+}
+
+/* v2 pages opt into the light surface */
+body.record {
+  @apply bg-paper font-plex text-graphite;
+}
+body.record ::selection {
+  background: #e4002b;
+  color: #fff;
+}
+body.record ::-webkit-scrollbar-track {
+  background: #fafaf9;
+}
+body.record ::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+}
+body.record ::-webkit-scrollbar-thumb:hover {
+  background: #e4002b;
 }
 
 .text-glow {

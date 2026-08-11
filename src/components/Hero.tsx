@@ -19,11 +19,47 @@ export function Hero({ onSearch }: { onSearch: () => void }) {
   });
   const latticeY = useTransform(scrollYProgress, [0, 1], [0, 180]);
   const latticeScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  // photograph drifts slower than the lattice, so the two separate as you scroll
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.12]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section ref={ref} id="top" className="relative min-h-[100svh] overflow-hidden grid-bg">
+      {/*
+        Product photography sits furthest back, fading in from the right so the
+        headline keeps a clean field to sit on. The molecular lattice still draws
+        over the top — it's this direction's signature and stays the top layer.
+      */}
+      <motion.div
+        style={{ y: photoY, scale: photoScale }}
+        /* desktop only: at narrow widths the photo cover-crops so hard that it
+           swallows the headline, so small screens keep the lattice alone */
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[68%] lg:block"
+      >
+        <img
+          src={`${import.meta.env.BASE_URL}img/hero-vials.webp`}
+          srcSet={`${import.meta.env.BASE_URL}img/hero-vials-sm.webp 800w, ${import.meta.env.BASE_URL}img/hero-vials.webp 1500w`}
+          sizes="68vw"
+          width={1500}
+          height={1120}
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center opacity-[0.55]"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 4%, #000 46%), linear-gradient(to bottom, #000 62%, transparent 96%)",
+            maskImage:
+              "linear-gradient(to right, transparent 4%, #000 46%), linear-gradient(to bottom, #000 62%, transparent 96%)",
+            WebkitMaskComposite: "source-in",
+            maskComposite: "intersect",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
+      </motion.div>
+
       {/* Ambient molecular field */}
       <motion.div
         style={{ y: latticeY, scale: latticeScale }}

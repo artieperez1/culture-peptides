@@ -102,12 +102,32 @@ export function Hero2({ onOpen }: { onOpen: (p: Product) => void }) {
           </motion.div>
         </div>
 
-        {/* ---------- right: the chromatogram ---------- */}
+      {/* ---------- right: the product, with its record over it ---------- */}
+      <div className="relative pb-24 sm:pb-28">
         <motion.figure
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="overflow-hidden border border-rule bg-white"
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}img/hero-vials-light.webp`}
+            srcSet={`${import.meta.env.BASE_URL}img/hero-vials-light-sm.webp 800w, ${import.meta.env.BASE_URL}img/hero-vials-light.webp 1500w`}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            width={1500}
+            height={1120}
+            alt="Three Culture Peptides research vials on a white surface, the front vial labelled BPC-157, 5 mg"
+            className="block h-auto w-full"
+            style={{ aspectRatio: "1500 / 1120" }}
+          />
+        </motion.figure>
+
+        <motion.figure
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="border border-rule bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_40px_-24px_rgba(0,0,0,0.25)]"
+          transition={{ duration: 0.7, delay: 0.45 }}
+          className="relative z-10 mx-auto -mt-12 w-[94%] border border-rule bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04),0_24px_60px_-24px_rgba(0,0,0,0.30)]
+            sm:absolute sm:-left-6 sm:bottom-0 sm:mt-0 sm:w-[66%] lg:-left-10 lg:w-[62%]"
         >
           <figcaption className="flex flex-wrap items-center justify-between gap-2 border-b border-rule px-4 py-2.5">
             <span className="font-data text-[10px] uppercase tracking-[0.16em] text-ink2">
@@ -123,12 +143,11 @@ export function Hero2({ onOpen }: { onOpen: (p: Product) => void }) {
             <Chromatogram className="h-auto w-full" />
           </div>
 
-          <dl className="grid grid-cols-2 gap-px border-t border-rule bg-rule sm:grid-cols-4">
+          <dl className="grid grid-cols-3 gap-px border-t border-rule bg-rule">
             {[
               ["Purity", "99.42%"],
               ["Spec", "≥ 99.0%"],
               ["Identity", "ESI-MS ✓"],
-              ["Endotoxin", "< 0.5 EU/mg"],
             ].map(([k, v]) => (
               <div key={k} className="bg-card px-3 py-2.5">
                 <dt className="font-data text-[9px] uppercase tracking-[0.14em] text-ash">{k}</dt>
@@ -137,6 +156,7 @@ export function Hero2({ onOpen }: { onOpen: (p: Product) => void }) {
             ))}
           </dl>
         </motion.figure>
+        </div>
       </div>
 
       {/* ---------- date-stamped counts ---------- */}

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { PRODUCTS, CATEGORIES, type Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS } from "../data/lots";
+import { Vial } from "../components/Vial";
 
 /**
  * Dual-axis navigation, borrowed from CordenPharma, whose two main nav items are
@@ -148,10 +149,30 @@ function Card({ p, i, onOpen }: { p: Product; i: number; onOpen: (p: Product) =>
         </span>
       </div>
 
-      <h3 className="font-serif text-xl font-semibold leading-tight text-ink2">{p.name}</h3>
-      <p className="mt-1 font-data text-[10px] uppercase tracking-[0.14em] text-ash">
-        {AREA_MAP[p.category] ?? p.category}
-      </p>
+      <button
+        onClick={() => onOpen(p)}
+        className="flex w-full items-start gap-3.5 text-left"
+        aria-label={`Open data for ${p.name}`}
+      >
+        <span className="w-12 shrink-0">
+          <Vial
+            name={p.name}
+            size={p.size}
+            code={p.code}
+            theme="light"
+            accent="#E4002B"
+            className="h-auto w-full transition-transform duration-300 group-hover:-translate-y-1"
+          />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-serif text-xl font-semibold leading-tight text-ink2">
+            {p.name}
+          </span>
+          <span className="mt-1 block font-data text-[10px] uppercase tracking-[0.14em] text-ash">
+            {AREA_MAP[p.category] ?? p.category}
+          </span>
+        </span>
+      </button>
 
       <dl className="my-4 space-y-1.5 border-y border-rule py-3 font-data text-[11px]">
         <Row k="MW" v={p.mw} />

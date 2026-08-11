@@ -46,3 +46,23 @@ every push.
 
 > **Compliance:** All products are presented strictly for in-vitro laboratory
 > research use only — not for human or veterinary use.
+
+## Local development note
+
+`vite.config.ts` sets an absolute `base` (`/culture-peptides/`) so each design
+direction can also be served from its own clean directory on GitHub Pages. That
+means the dev server serves under the same prefix:
+
+```
+http://localhost:5185/culture-peptides/
+```
+
+If you move the site to a root custom domain, change `base` to `"/"`.
+
+## Compound monographs
+
+`src/data/monographs.ts` holds the per-compound descriptions. They deliberately
+describe only what each molecule **is** and what it **acts on** mechanistically,
+plus the research models it appears in — never human effects, benefits, dosing,
+protocols or administration. Keep it that way: the separation is what makes the
+research-use-only framing defensible rather than decorative.

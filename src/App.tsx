@@ -9,16 +9,24 @@ import { Process } from "./components/Process";
 import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
 import { SearchOverlay } from "./components/SearchOverlay";
+import { ProductDetail } from "./components/ProductDetail";
 import type { Product } from "./data/products";
 
 export default function App() {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [detail, setDetail] = useState<Product | null>(null);
   const [cart, setCart] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
 
   const addToCart = useCallback((p: Product) => {
     setCart((c) => c + 1);
     setToast(`${p.name} · ${p.size} added to cart`);
+    setDetail(null);
+  }, []);
+
+  const openDetail = useCallback((p: Product) => {
+    setSearchOpen(false);
+    setDetail(p);
   }, []);
 
   useEffect(() => {
@@ -54,7 +62,7 @@ export default function App() {
       <main>
         <Hero onSearch={() => setSearchOpen(true)} />
         <Marquee />
-        <Catalog onAdd={addToCart} />
+        <Catalog onAdd={addToCart} onOpen={openDetail} />
         <Quality />
         <Process />
         <FAQ />
@@ -62,7 +70,8 @@ export default function App() {
 
       <Footer onSearch={() => setSearchOpen(true)} />
 
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} onAdd={addToCart} />
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} onAdd={openDetail} />
+      <ProductDetail product={detail} onClose={() => setDetail(null)} onAdd={addToCart} />
 
       {/* toast */}
       <AnimatePresence>

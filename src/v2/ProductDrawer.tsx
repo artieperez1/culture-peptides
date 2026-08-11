@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS, LAB } from "../data/lots";
+import { MONOGRAPHS } from "../data/monographs";
+import { Vial } from "../components/Vial";
 
 /**
  * Bio-Techne / Tocris embeds Molarity, Dilution and Reconstitution calculators
@@ -85,6 +87,7 @@ function Body({
   const vialMg = parseMg(product.size);
   const lots = LOTS.filter((l) => l.productId === product.id && l.released);
   const area = AREA_MAP[product.category] ?? product.category;
+  const mono = MONOGRAPHS[product.id];
 
   return (
     <>
@@ -119,7 +122,71 @@ function Body({
           cosmetic. Not evaluated by the FDA.
         </p>
 
-        <p className="font-plex text-[14px] leading-relaxed text-graphite">{product.blurb}</p>
+        {/* ---- vial + what this is ---- */}
+        <section className="grid gap-5 sm:grid-cols-[140px_1fr] sm:items-start">
+          <div className="mx-auto w-[130px] sm:mx-0 sm:w-full">
+            <Vial
+              name={product.name}
+              size={product.size}
+              code={product.code}
+              lot={lots[0]?.lot}
+              theme="light"
+              accent="#E4002B"
+              animate
+              className="h-auto w-full"
+            />
+          </div>
+          <div>
+            {mono && (
+              <p className="mb-2 inline-block border border-crimson/25 bg-crimson-soft px-2 py-1 font-data text-[9.5px] uppercase tracking-[0.14em] text-crimson-deep">
+                {mono.class}
+              </p>
+            )}
+            <p className="font-plex text-[14px] leading-relaxed text-graphite">{product.blurb}</p>
+            {mono && (
+              <p className="mt-3 font-plex text-[13.5px] leading-relaxed text-ash">{mono.what}</p>
+            )}
+          </div>
+        </section>
+
+        {mono && (
+          <section className="space-y-5">
+            <div>
+              <h3 className="mb-2 font-data text-[10px] uppercase tracking-[0.18em] text-ash">
+                What it acts on
+              </h3>
+              <p className="font-plex text-[13.5px] leading-relaxed text-graphite">{mono.mechanism}</p>
+            </div>
+            <div>
+              <h3 className="mb-2 font-data text-[10px] uppercase tracking-[0.18em] text-ash">
+                Studied in
+              </h3>
+              <ul className="space-y-1.5">
+                {mono.studied.map((s) => (
+                  <li key={s} className="flex gap-2.5 font-plex text-[13px] leading-relaxed text-ash">
+                    <span className="mt-[3px] h-1 w-1 shrink-0 bg-crimson" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="border-l-2 border-rule pl-3">
+                <h3 className="mb-1.5 font-data text-[10px] uppercase tracking-[0.18em] text-ash">Handling</h3>
+                <p className="font-plex text-[12.5px] leading-relaxed text-ash">{mono.handling}</p>
+              </div>
+              <div className="border-l-2 border-rule pl-3">
+                <h3 className="mb-1.5 font-data text-[10px] uppercase tracking-[0.18em] text-ash">Origin</h3>
+                <p className="font-plex text-[12.5px] leading-relaxed text-ash">{mono.origin}</p>
+              </div>
+            </div>
+            <p className="border-t border-rule pt-3.5 font-plex text-[11.5px] leading-relaxed text-ash">
+              Mechanism and study areas summarize published literature on the
+              molecule. Nothing here describes an effect in humans, and no dosing
+              or administration guidance is provided or available on request.
+            </p>
+          </section>
+        )}
 
         {/* spec table — the fields the reagent suppliers actually publish */}
         <section>

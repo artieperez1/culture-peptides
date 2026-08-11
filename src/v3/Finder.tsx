@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { PRODUCTS, CATEGORIES, type Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS } from "../data/lots";
 import { MODIFICATIONS } from "../data/logistics";
+import { Vial } from "../components/Vial";
 
 /**
  * Two ideas stacked.
@@ -212,10 +213,28 @@ function Card3({ p, i, onOpen }: { p: Product; i: number; onOpen: (p: Product) =
         </span>
       </div>
 
-      <h4 className="font-sora text-[19px] font-semibold leading-tight tracking-[-0.02em] text-white">
-        {p.name}
-      </h4>
-      <p className="mt-1 lab">{AREA_MAP[p.category] ?? p.category}</p>
+      <button
+        onClick={() => onOpen(p)}
+        className="flex w-full items-start gap-3.5 text-left"
+        aria-label={`Open record for ${p.name}`}
+      >
+        <span className="w-12 shrink-0">
+          <Vial
+            name={p.name}
+            size={p.size}
+            code={p.code}
+            theme="dark"
+            accent="#FF1F3D"
+            className="h-auto w-full transition-transform duration-300 group-hover:-translate-y-1"
+          />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-sora text-[19px] font-semibold leading-tight tracking-[-0.02em] text-white">
+            {p.name}
+          </span>
+          <span className="mt-1 block lab">{AREA_MAP[p.category] ?? p.category}</span>
+        </span>
+      </button>
 
       <div className="mt-3 flex flex-wrap gap-1">
         {mods.map((m) => (

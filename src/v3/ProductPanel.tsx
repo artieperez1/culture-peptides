@@ -4,6 +4,8 @@ import type { Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS, LAB } from "../data/lots";
 import { FULFILMENT, MODIFICATIONS } from "../data/logistics";
 import { ONE_LETTER } from "../lib/search";
+import { MONOGRAPHS } from "../data/monographs";
+import { Vial } from "../components/Vial";
 import { gravy, isoelectricPoint, netCharge, solubilityHint } from "../v2/peptideMath";
 
 function parseMw(mw: string): number | null {
@@ -76,6 +78,7 @@ function Inner({
   const lots = LOTS.filter((l) => l.productId === product.id).sort((a, b) => (a.tested < b.tested ? 1 : -1));
   const seq = ONE_LETTER[product.id];
   const mods = MODIFICATIONS[product.id] ?? [];
+  const mono = MONOGRAPHS[product.id];
 
   const theory = useMemo(() => {
     if (!seq) return null;
@@ -110,7 +113,72 @@ function Inner({
           cosmetic. Not evaluated by the FDA.
         </p>
 
-        <p className="text-[14px] leading-relaxed text-chalk">{product.blurb}</p>
+        {/* ---- vial + what this is ---- */}
+        <section className="grid gap-5 sm:grid-cols-[150px_1fr] sm:items-start">
+          <div className="mx-auto w-[140px] sm:mx-0 sm:w-full">
+            <Vial
+              name={product.name}
+              size={product.size}
+              code={product.code}
+              lot={lots.find((l) => l.released)?.lot}
+              theme="dark"
+              accent="#FF1F3D"
+              animate
+              className="h-auto w-full"
+            />
+          </div>
+
+          <div>
+            {mono && (
+              <p className="mb-2 inline-block border border-signal/30 bg-signal/10 px-2 py-1 font-data text-[9.5px] uppercase tracking-[0.14em] text-signal">
+                {mono.class}
+              </p>
+            )}
+            <p className="text-[14px] leading-relaxed text-chalk">{product.blurb}</p>
+            {mono && (
+              <p className="mt-3 text-[13.5px] leading-relaxed text-fog">{mono.what}</p>
+            )}
+          </div>
+        </section>
+
+        {/* ---- what it does, mechanistically ---- */}
+        {mono && (
+          <section className="space-y-5">
+            <div>
+              <h3 className="mb-2 lab">What it acts on</h3>
+              <p className="text-[13.5px] leading-relaxed text-chalk">{mono.mechanism}</p>
+            </div>
+
+            <div>
+              <h3 className="mb-2 lab">Studied in</h3>
+              <ul className="space-y-1.5">
+                {mono.studied.map((s) => (
+                  <li key={s} className="flex gap-2.5 text-[13px] leading-relaxed text-fog">
+                    <span className="mt-[3px] h-1 w-1 shrink-0 bg-signal" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="border-l-2 border-hair pl-3">
+                <h3 className="mb-1.5 lab">Handling</h3>
+                <p className="text-[12.5px] leading-relaxed text-fog">{mono.handling}</p>
+              </div>
+              <div className="border-l-2 border-hair pl-3">
+                <h3 className="mb-1.5 lab">Origin</h3>
+                <p className="text-[12.5px] leading-relaxed text-fog">{mono.origin}</p>
+              </div>
+            </div>
+
+            <p className="border-t border-hair pt-3.5 text-[11.5px] leading-relaxed text-fog">
+              Mechanism and study areas summarize published literature on the
+              molecule. Nothing here describes an effect in humans, and no dosing
+              or administration guidance is provided or available on request.
+            </p>
+          </section>
+        )}
 
         {mods.length > 0 && (
           <div className="flex flex-wrap gap-1.5">

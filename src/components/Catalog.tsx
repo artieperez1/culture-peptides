@@ -1,8 +1,15 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PRODUCTS, CATEGORIES, type Category, type Product } from "../data/products";
+import { Vial } from "./Vial";
 
-export function Catalog({ onAdd }: { onAdd: (p: Product) => void }) {
+export function Catalog({
+  onAdd,
+  onOpen,
+}: {
+  onAdd: (p: Product) => void;
+  onOpen: (p: Product) => void;
+}) {
   const [filter, setFilter] = useState<Category | "All">("All");
 
   const shown = useMemo(
@@ -36,7 +43,7 @@ export function Catalog({ onAdd }: { onAdd: (p: Product) => void }) {
         <motion.div layout className="grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence>
             {shown.map((p, i) => (
-              <ProductCard key={p.id} p={p} i={i} onAdd={onAdd} />
+              <ProductCard key={p.id} p={p} i={i} onAdd={onAdd} onOpen={onOpen} />
             ))}
           </AnimatePresence>
         </motion.div>
@@ -71,7 +78,17 @@ function FilterTab({
   );
 }
 
-function ProductCard({ p, i, onAdd }: { p: Product; i: number; onAdd: (p: Product) => void }) {
+function ProductCard({
+  p,
+  i,
+  onAdd,
+  onOpen,
+}: {
+  p: Product;
+  i: number;
+  onAdd: (p: Product) => void;
+  onOpen: (p: Product) => void;
+}) {
   const [added, setAdded] = useState(false);
 
   return (
@@ -99,8 +116,29 @@ function ProductCard({ p, i, onAdd }: { p: Product; i: number; onAdd: (p: Produc
         )}
       </header>
 
-      <h3 className="font-display text-2xl font-bold leading-none text-white">{p.name}</h3>
-      <p className="mt-3 text-[13px] leading-relaxed text-steel">{p.blurb}</p>
+      {/* vial + name, both open the full record */}
+      <button
+        onClick={() => onOpen(p)}
+        className="flex w-full items-start gap-4 text-left"
+        aria-label={`View full record for ${p.name}`}
+      >
+        <span className="w-14 shrink-0">
+          <Vial
+            name={p.name}
+            size={p.size}
+            code={p.code}
+            theme="dark"
+            accent="#FF2233"
+            className="h-auto w-full transition-transform duration-300 group-hover:-translate-y-1"
+          />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-display text-2xl font-bold leading-none text-white transition-colors group-hover:text-culture">
+            {p.name}
+          </span>
+          <span className="mt-3 block text-[13px] leading-relaxed text-steel">{p.blurb}</span>
+        </span>
+      </button>
 
       {/* spec readout */}
       <dl className="my-5 grid grid-cols-2 gap-x-4 gap-y-2 border-y border-line py-4 font-mono text-[11px]">
@@ -118,20 +156,28 @@ function ProductCard({ p, i, onAdd }: { p: Product; i: number; onAdd: (p: Produc
             <span className="ml-1 font-mono text-[11px] font-normal text-steel">/ vial</span>
           </p>
         </div>
-        <button
-          onClick={() => {
-            onAdd(p);
-            setAdded(true);
-            setTimeout(() => setAdded(false), 1200);
-          }}
-          className={`btn px-4 py-2.5 font-semibold ${
-            added
-              ? "bg-white text-ink"
-              : "border border-line text-mist hover:border-culture hover:bg-culture hover:text-ink"
-          }`}
-        >
-          {added ? "Added ✓" : "Add +"}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onOpen(p)}
+            className="btn border border-line px-3 py-2.5 text-steel hover:border-culture hover:text-white"
+          >
+            Details
+          </button>
+          <button
+            onClick={() => {
+              onAdd(p);
+              setAdded(true);
+              setTimeout(() => setAdded(false), 1200);
+            }}
+            className={`btn px-4 py-2.5 font-semibold ${
+              added
+                ? "bg-white text-ink"
+                : "border border-line text-mist hover:border-culture hover:bg-culture hover:text-ink"
+            }`}
+          >
+            {added ? "Added ✓" : "Add +"}
+          </button>
+        </div>
       </div>
     </motion.article>
   );

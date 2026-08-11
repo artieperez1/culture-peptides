@@ -25,6 +25,10 @@ const LABEL = { left: 9.44, top: 39.79, width: 81.24, height: 35.99 };
 const LW = 617;
 const LH = 672;
 
+/** Intrinsic size of the shipped photographs. */
+const IMG_W = 760;
+const IMG_H = 1867;
+
 interface Props {
   name: string;
   size: string;
@@ -102,9 +106,14 @@ export const VialPhoto = memo(function VialPhoto({
         alt={`Vial of ${name}, ${size}, catalog number ${code}`}
         loading="lazy"
         decoding="async"
+        /* intrinsic size reserves the box before the bytes arrive, so the label
+           overlay never sits on a collapsed element and nothing shifts on load */
+        width={IMG_W}
+        height={IMG_H}
         onError={() => setFailed(true)}
         className="block h-auto w-full"
         style={{
+          aspectRatio: `${IMG_W} / ${IMG_H}`,
           // feather the studio background into whatever surface this sits on
           WebkitMaskImage:
             "radial-gradient(115% 92% at 50% 48%, #000 62%, transparent 100%)",

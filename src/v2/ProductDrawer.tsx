@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS, LAB } from "../data/lots";
 import { MONOGRAPHS } from "../data/monographs";
-import { Vial } from "../components/Vial";
+import { VialPhoto } from "../components/VialPhoto";
 
 /**
  * Bio-Techne / Tocris embeds Molarity, Dilution and Reconstitution calculators
@@ -125,13 +125,12 @@ function Body({
         {/* ---- vial + what this is ---- */}
         <section className="grid gap-5 sm:grid-cols-[140px_1fr] sm:items-start">
           <div className="mx-auto w-[130px] sm:mx-0 sm:w-full">
-            <Vial
+            <VialPhoto
               name={product.name}
               size={product.size}
               code={product.code}
               lot={lots[0]?.lot}
               theme="light"
-              accent="#E4002B"
               animate
               className="h-auto w-full"
             />

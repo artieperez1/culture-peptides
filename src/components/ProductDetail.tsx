@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { Product } from "../data/products";
 import { MONOGRAPHS } from "../data/monographs";
 import { LOTS, LAB, CITATIONS } from "../data/lots";
-import { Vial } from "./Vial";
+import { VialPhoto } from "./VialPhoto";
 
 /**
  * Detail view for direction 01. Same monograph content as the other two
@@ -95,13 +95,12 @@ function Body({
 
         <section className="grid gap-5 sm:grid-cols-[140px_1fr] sm:items-start">
           <div className="mx-auto w-[130px] sm:mx-0 sm:w-full">
-            <Vial
+            <VialPhoto
               name={product.name}
               size={product.size}
               code={product.code}
               lot={lots[0]?.lot}
               theme="dark"
-              accent="#FF2233"
               animate
               className="h-auto w-full"
             />

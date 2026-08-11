@@ -5,7 +5,7 @@ import { AREA_MAP, CITATIONS, LOTS, LAB } from "../data/lots";
 import { FULFILMENT, MODIFICATIONS } from "../data/logistics";
 import { ONE_LETTER } from "../lib/search";
 import { MONOGRAPHS } from "../data/monographs";
-import { Vial } from "../components/Vial";
+import { VialPhoto } from "../components/VialPhoto";
 import { gravy, isoelectricPoint, netCharge, solubilityHint } from "../v2/peptideMath";
 
 function parseMw(mw: string): number | null {
@@ -116,13 +116,12 @@ function Inner({
         {/* ---- vial + what this is ---- */}
         <section className="grid gap-5 sm:grid-cols-[150px_1fr] sm:items-start">
           <div className="mx-auto w-[140px] sm:mx-0 sm:w-full">
-            <Vial
+            <VialPhoto
               name={product.name}
               size={product.size}
               code={product.code}
               lot={lots.find((l) => l.released)?.lot}
               theme="dark"
-              accent="#FF1F3D"
               animate
               className="h-auto w-full"
             />

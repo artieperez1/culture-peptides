@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PRODUCTS, CATEGORIES, type Category, type Product } from "../data/products";
-import { Vial } from "./Vial";
+import { VialPhoto } from "./VialPhoto";
 
 export function Catalog({
   onAdd,
@@ -123,12 +123,11 @@ function ProductCard({
         aria-label={`View full record for ${p.name}`}
       >
         <span className="w-14 shrink-0">
-          <Vial
+          <VialPhoto
             name={p.name}
             size={p.size}
             code={p.code}
             theme="dark"
-            accent="#FF2233"
             className="h-auto w-full transition-transform duration-300 group-hover:-translate-y-1"
           />
         </span>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { PRODUCTS, CATEGORIES, type Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS } from "../data/lots";
 import { MODIFICATIONS } from "../data/logistics";
-import { Vial } from "../components/Vial";
+import { VialPhoto } from "../components/VialPhoto";
 
 /**
  * Two ideas stacked.
@@ -219,12 +219,11 @@ function Card3({ p, i, onOpen }: { p: Product; i: number; onOpen: (p: Product) =
         aria-label={`Open record for ${p.name}`}
       >
         <span className="w-12 shrink-0">
-          <Vial
+          <VialPhoto
             name={p.name}
             size={p.size}
             code={p.code}
             theme="dark"
-            accent="#FF1F3D"
             className="h-auto w-full transition-transform duration-300 group-hover:-translate-y-1"
           />
         </span>

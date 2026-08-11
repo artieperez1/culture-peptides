@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { PRODUCTS, CATEGORIES, type Product } from "../data/products";
 import { AREA_MAP, CITATIONS, LOTS } from "../data/lots";
-import { Vial } from "../components/Vial";
+import { VialPhoto } from "../components/VialPhoto";
 
 /**
  * Dual-axis navigation, borrowed from CordenPharma, whose two main nav items are
@@ -155,12 +155,11 @@ function Card({ p, i, onOpen }: { p: Product; i: number; onOpen: (p: Product) =>
         aria-label={`Open data for ${p.name}`}
       >
         <span className="w-12 shrink-0">
-          <Vial
+          <VialPhoto
             name={p.name}
             size={p.size}
             code={p.code}
             theme="light"
-            accent="#E4002B"
             className="h-auto w-full transition-transform duration-300 group-hover:-translate-y-1"
           />
         </span>

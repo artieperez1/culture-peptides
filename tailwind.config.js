@@ -28,6 +28,18 @@ export default {
           deep: "#B00020",
           soft: "#FEF2F4",
         },
+        /* v3 — "the vault": dark chrome, white data surfaces */
+        obsidian: "#08080A",
+        slate2: "#101014",
+        raised: "#16161B",
+        hair: "#22222A",
+        fog: "#8E8E99",
+        chalk: "#E8E8EC",
+        signal: {
+          DEFAULT: "#FF1F3D",
+          deep: "#C8102E",
+          dim: "#7A0A1C",
+        },
       },
       fontFamily: {
         display: ['"Space Grotesk"', "system-ui", "sans-serif"],
@@ -36,6 +48,7 @@ export default {
         serif: ['"IBM Plex Serif"', "Georgia", "serif"],
         plex: ['"IBM Plex Sans"', "system-ui", "sans-serif"],
         data: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+        sora: ['"Sora"', "system-ui", "sans-serif"],
       },
       letterSpacing: {
         tightest: "-0.05em",

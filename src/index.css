@@ -108,6 +108,51 @@ body {
   }
 }
 
+@layer components {
+  /* ---- v3 "the vault": dark chrome + white data surfaces ---- */
+  .btn-signal {
+    @apply inline-flex shrink-0 items-center justify-center gap-2 bg-signal px-5 py-3 font-data
+      text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors
+      hover:bg-signal-deep focus-visible:outline-none focus-visible:ring-2
+      focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian;
+  }
+  .btn-outline {
+    @apply inline-flex shrink-0 items-center justify-center gap-2 border border-hair bg-transparent
+      px-5 py-3 font-data text-[11px] font-semibold uppercase tracking-[0.16em] text-chalk
+      transition-colors hover:border-signal hover:text-white focus-visible:outline-none
+      focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2
+      focus-visible:ring-offset-obsidian;
+  }
+  /* a "document" surface — white paper inside the dark shell */
+  .paper {
+    @apply border border-hair bg-white text-ink2;
+  }
+  .kbd {
+    @apply rounded-[2px] border border-hair px-1.5 py-0.5 font-data text-[10px] text-fog;
+  }
+  .lab {
+    @apply font-data text-[10px] uppercase tracking-[0.2em] text-fog;
+  }
+}
+
+/* v3 shell */
+body.vault {
+  @apply bg-obsidian font-body text-chalk;
+}
+body.vault ::selection {
+  background: #ff1f3d;
+  color: #fff;
+}
+body.vault ::-webkit-scrollbar-track {
+  background: #08080a;
+}
+body.vault ::-webkit-scrollbar-thumb {
+  background: #22222a;
+}
+body.vault ::-webkit-scrollbar-thumb:hover {
+  background: #ff1f3d;
+}
+
 /* v2 pages opt into the light surface */
 body.record {
   @apply bg-paper font-plex text-graphite;

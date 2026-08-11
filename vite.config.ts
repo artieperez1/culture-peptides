@@ -15,6 +15,8 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         // v2 — "the record": light analytical-instrument direction
         record: resolve(__dirname, "record.html"),
+        // v3 — "the vault": everything, dark chrome + white data surfaces
+        flagship: resolve(__dirname, "flagship.html"),
       },
     },
   },

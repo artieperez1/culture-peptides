@@ -31,6 +31,9 @@ QUALITY = 90
 
 VARIANTS = [("vial-dark", "vial-dark-source.png"), ("vial-light", "vial-light-source.png")]
 
+# Hero group shot — no label overlay, the text is photographed in.
+HERO = [("hero-vials", 1500, 86), ("hero-vials-sm", 800, 84)]
+
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
@@ -62,6 +65,16 @@ def main() -> None:
         dest = OUT / f"{name}.webp"
         cropped.save(dest, "WEBP", quality=QUALITY, method=6)
         print(f"{dest.relative_to(ROOT)}  {TARGET_W}x{out_h}  {dest.stat().st_size // 1024} KB")
+
+    hero_src = SRC / "hero-vials-source.png"
+    if hero_src.exists():
+        hero = Image.open(hero_src).convert("RGB")
+        hw, hh = hero.size
+        for name, tw, q in HERO:
+            r = hero.resize((tw, round(hh * tw / hw)), Image.LANCZOS)
+            dest = OUT / f"{name}.webp"
+            r.save(dest, "WEBP", quality=q, method=6)
+            print(f"{dest.relative_to(ROOT)}  {r.size[0]}x{r.size[1]}  {dest.stat().st_size // 1024} KB")
 
     if rect:
         print(

@@ -23,8 +23,10 @@ const COUNTS = [
 export function Hero3({ onSearch }: { onSearch: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const paperY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const paperRot = useTransform(scrollYProgress, [0, 1], [-1.2, 0.6]);
+  // photo and certificate drift at different rates, which is what reads as depth
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const paperY = useTransform(scrollYProgress, [0, 1], [0, -95]);
+  const paperRot = useTransform(scrollYProgress, [0, 1], [-1.6, 0.8]);
   const glowOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
 
   return (
@@ -113,53 +115,77 @@ export function Hero3({ onSearch }: { onSearch: () => void }) {
           </motion.p>
         </div>
 
-        {/* ---------- the document ---------- */}
-        <motion.div
-          style={{ y: paperY, rotate: paperRot }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative"
-        >
-          {/* stacked-paper depth */}
-          <div className="absolute inset-x-4 -bottom-2 h-full border border-hair bg-slate2/60" />
-          <div className="absolute inset-x-2 -bottom-1 h-full border border-hair bg-raised/80" />
-
-          <figure className="paper relative shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
-            <figcaption className="flex flex-wrap items-center justify-between gap-2 border-b border-rule px-4 py-2.5">
-              <span className="font-data text-[10px] uppercase tracking-[0.16em] text-ink2">
-                Certificate of analysis · BPC-157
+        {/* ---------- the product, with its proof laid over it ---------- */}
+        <div className="relative pb-20 sm:pb-24 lg:pb-28">
+          {/* studio photograph */}
+          <motion.figure
+            style={{ y: photoY }}
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="relative overflow-hidden border border-hair"
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}img/hero-vials.webp`}
+              srcSet={`${import.meta.env.BASE_URL}img/hero-vials-sm.webp 800w, ${import.meta.env.BASE_URL}img/hero-vials.webp 1500w`}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              width={1500}
+              height={1120}
+              alt="Four Culture Peptides research vials on a black surface under red rim lighting, the front vial labelled BPC-157, 5 mg"
+              className="block h-auto w-full"
+              style={{ aspectRatio: "1500 / 1120" }}
+            />
+            {/* grade the photo into the page */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-obsidian/70 via-transparent to-transparent" />
+            <figcaption className="absolute left-4 top-4 flex items-center gap-1.5 border border-white/15 bg-obsidian/60 px-2 py-1 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 bg-signal" />
+              <span className="font-data text-[9.5px] uppercase tracking-[0.16em] text-white/85">
+                Lot CP-0247-A
               </span>
-              <span className="inline-flex items-center gap-1.5 font-data text-[10px] uppercase tracking-[0.16em] text-crimson-deep">
+            </figcaption>
+          </motion.figure>
+
+          {/* the certificate for the vial in the photograph */}
+          <motion.figure
+            style={{ y: paperY, rotate: paperRot }}
+            initial={{ opacity: 0, y: 34 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="paper relative z-10 mx-auto -mt-14 w-[92%] shadow-[0_40px_100px_-24px_rgba(0,0,0,0.95)]
+              sm:absolute sm:-bottom-4 sm:-left-8 sm:mt-0 sm:w-[64%] lg:-bottom-6 lg:-left-14 lg:w-[60%]"
+          >
+            <figcaption className="flex flex-wrap items-center justify-between gap-2 border-b border-rule px-3.5 py-2">
+              <span className="font-data text-[9.5px] uppercase tracking-[0.16em] text-ink2">
+                Certificate of analysis
+              </span>
+              <span className="inline-flex items-center gap-1.5 font-data text-[9.5px] uppercase tracking-[0.16em] text-crimson-deep">
                 <span className="h-1.5 w-1.5 rounded-full bg-crimson" />
-                Lot CP-0247-A released
+                Released
               </span>
             </figcaption>
 
-            <div className="px-2 py-3">
+            <div className="px-1.5 py-2">
               <Chromatogram className="h-auto w-full" />
             </div>
 
-            <dl className="grid grid-cols-2 gap-px border-t border-rule bg-rule sm:grid-cols-4">
+            <dl className="grid grid-cols-3 gap-px border-t border-rule bg-rule">
               {[
                 ["Purity", "99.42%"],
                 ["Spec", "≥ 99.0%"],
                 ["Identity", "ESI-MS ✓"],
-                ["Endotoxin", "< 0.5 EU/mg"],
               ].map(([k, v]) => (
-                <div key={k} className="bg-white px-3 py-2.5">
-                  <dt className="font-data text-[9px] uppercase tracking-[0.14em] text-ash">{k}</dt>
-                  <dd className="mt-0.5 font-data text-[12px] font-medium text-ink2">{v}</dd>
+                <div key={k} className="bg-white px-2.5 py-2">
+                  <dt className="font-data text-[8.5px] uppercase tracking-[0.14em] text-ash">{k}</dt>
+                  <dd className="mt-0.5 font-data text-[11px] font-medium text-ink2">{v}</dd>
                 </div>
               ))}
             </dl>
 
-            <p className="border-t border-rule px-4 py-2.5 font-data text-[9.5px] leading-relaxed text-ash">
-              Tested by {LAB.name} · {LAB.accreditation} · {LAB.location} — call
-              them to confirm this result.
+            <p className="border-t border-rule px-3.5 py-2 font-data text-[9px] leading-relaxed text-ash">
+              Tested by {LAB.name} · {LAB.accreditation} — call them to confirm.
             </p>
-          </figure>
-        </motion.div>
+          </motion.figure>
+        </div>
       </div>
 
       {/* counts */}

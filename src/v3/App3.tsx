@@ -10,6 +10,7 @@ import { CommandPalette } from "./CommandPalette";
 import { ProductPanel } from "./ProductPanel";
 import type { Product } from "../data/products";
 import { FULFILMENT } from "../data/logistics";
+import { DIR } from "../lib/directions";
 
 interface Line { product: Product; qty: number }
 
@@ -388,8 +389,8 @@ function Footer3() {
           <p className="font-data text-[10px] text-fog">© 2026 Culture Peptides — research use only.</p>
           <p className="font-data text-[10px] text-fog">
             Direction 03 · “The Vault” ·{" "}
-            <a href="/" className="text-signal hover:underline">01</a>{" "}
-            <a href="/record.html" className="text-signal hover:underline">02</a>
+            <a href={DIR.decoded} className="text-signal hover:underline">01</a>{" · "}
+            <a href={DIR.record} className="text-signal hover:underline">02</a>
           </p>
         </div>
       </div>

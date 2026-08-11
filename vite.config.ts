@@ -3,9 +3,10 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 
 export default defineConfig({
-  // Relative base so assets resolve under the GitHub Pages project path
-  // (https://<user>.github.io/culture-peptides/).
-  base: "./",
+  // Absolute base so assets resolve from any URL depth — needed because each
+  // direction is also served from its own clean directory (/vault/, /record/).
+  // Moving to a root custom domain later? Change this to "/".
+  base: "/culture-peptides/",
   plugins: [react()],
   server: { host: true, port: 5185 },
   build: {

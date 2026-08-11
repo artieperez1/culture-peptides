@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { DIR } from "../lib/directions";
 
 const COLS = [
   {
@@ -149,6 +150,12 @@ export function Footer({ onSearch }: { onSearch: () => void }) {
             <a href="#" className="hover:text-white">Terms</a>
             <a href="#" className="hover:text-white">Privacy</a>
             <a href="#" className="hover:text-white">Compliance</a>
+            <span className="text-line">|</span>
+            <span>
+              Direction 01 ·{" "}
+              <a href={DIR.record} className="text-culture hover:underline">02</a>{" · "}
+              <a href={DIR.vault} className="text-culture hover:underline">03</a>
+            </span>
           </div>
         </div>
       </div>

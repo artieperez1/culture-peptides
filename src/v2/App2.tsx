@@ -8,6 +8,7 @@ import { FAQ2 } from "./FAQ2";
 import { ProductDrawer } from "./ProductDrawer";
 import { CartDrawer } from "./CartDrawer";
 import type { Product } from "../data/products";
+import { DIR } from "../lib/directions";
 
 export interface CartLine {
   product: Product;
@@ -197,8 +198,11 @@ function Nav2({ count, onCart }: { count: number; onCart: () => void }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <a href="/" className="hidden font-data text-[10px] uppercase tracking-[0.14em] text-ash hover:text-ink2 sm:inline">
-            ↔ v1
+          <a
+            href={DIR.vault}
+            className="hidden font-data text-[10px] uppercase tracking-[0.14em] text-ash hover:text-ink2 sm:inline"
+          >
+            → 03
           </a>
           <button
             onClick={onCart}
@@ -277,7 +281,8 @@ function Footer2() {
           </p>
           <p className="font-data text-[10px] text-ash">
             Direction 02 · “The Record” —{" "}
-            <a href="/" className="text-crimson-deep hover:underline">see direction 01</a>
+            <a href={DIR.decoded} className="text-crimson-deep hover:underline">01</a>{" · "}
+            <a href={DIR.vault} className="text-crimson-deep hover:underline">03</a>
           </p>
         </div>
       </div>
